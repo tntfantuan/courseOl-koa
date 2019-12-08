@@ -53,6 +53,27 @@ var query = (sql, arr, callback) => {
     });
 }
 
+var updataDatabase = (fileType, userNickname, tb_setName) => {
+    let userMybg = `http://192.168.2.128:3000${fileType.substr(1)}`;
+    let userMybgSql = `UPDATE yh_user SET ${tb_setName} = ? WHERE userNickname = ?`;
+    let userMybgParams = [userMybg, userNickname];
+    query(userMybgSql, userMybgParams).then((data) => { console.log(data); }).catch((err) => { console.log(err); });
+}
+
+var selectDatabase = (tb_name) => {
+    return new Promise((resolve, reject) => {
+        let selectSql = `SELECT * FROM ${tb_name}`;
+        query(selectSql, (error, results) => {
+            if (error) reject('error:' + error);
+            else {
+                resolve(results);
+            }
+        });
+    });
+
+}
+
 module.exports = {
-    query
+    query,
+    selectDatabase
 };
