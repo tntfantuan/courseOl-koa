@@ -1,10 +1,21 @@
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-10 17:35:56 
+ * @Last Modified by: mikey.zhiyuanL
+ * @Last Modified time: 2019-12-10 17:59:20
+ */
 var sd = require('silly-datetime');
-let randomWord = require('../utils/randomkey/randomKey');
-
+var randomWord = require('../utils/randomkey/randomKey');
+let db = require('../db/mysqldb');
 let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
 
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-10 17:35:56 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-10 17:35:56 
+ */
 let commentWorkCollectionAll = async (ctx, next) => {
-    // console.log('ctx.body :' + ctx.request.body.wlcOpenkey);
     const commentWorkCollectionData = [{
         wlcOpenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrcc',
         wlcUserOpenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrka',
@@ -30,8 +41,25 @@ let commentWorkCollectionAll = async (ctx, next) => {
         commentUsernickname: 'fantuan',
         commentUseropenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrka'
     }];
-    ctx.response.body = commentWorkCollectionData;
+    let tb_condition = '*';
+    let tb_name = 'yh_wccComment';
+    let tb_whereWlcOpenkey = `wccOpenkey = '${ctx.request.body[0].wlcOpenkey}'`;
+    await db.sWhereDb(tb_condition, tb_name, tb_whereWlcOpenkey).then(data => {
+        let thisAllcomment = data;
+        // console.log(thisAllcomment);
+        ctx.response.body = thisAllcomment;
+    }).catch(err => {
+        console.log(err);
+        ctx.response.body = '400';
+    });
 }
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-10 17:35:56 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-10 17:35:56 
+ */
 let commentCourseAll = async (ctx, next) => {
     const commentCourseData = [{
         courseOpenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrcc',
@@ -60,43 +88,79 @@ let commentCourseAll = async (ctx, next) => {
     }]
     ctx.response.body = commentCourseData;
 }
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-10 17:35:56 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-10 17:35:56 
+ */
 let commentUser = async (ctx, next) => { }
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-10 17:35:56 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-10 17:35:56 
+ */
 let commentCourse = async (ctx, next) => { }
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-10 17:35:56 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-10 17:35:56 
+ */
 let commentWorkCollection = async (ctx, next) => {
-    console.log(ctx.request.body);
-    // const commentworkcollectionReply = {
-    //     wlcOpenkey: ctx.request.body[0].wlcOpenkey,
-    //     commentOpenkey: ctx.request.body[0].commentOpenkey,
-    //     commentContent: ctx.request.body[0].commenttextarea,
-    //     commentTime: '2019-09-15:19',
-    //     commentEquipment: 'Chrome',
-    //     commentType: ctx.request.body[0].commentType,
-    //     userHeadimg: ctx.request.body[0].userHeadimg,
-    //     userNickname: ctx.request.body[0].userNickname,
-    //     userOpenkey: ctx.request.body[0].userOpenkey
-    // }
-    let commentOpenkey = randomWord.randomWord(false, 43);
-    // inFormation.information('111222','');
-    ctx.request.body[0].commentOpenkey = commentOpenkey;
+
+    ctx.request.body[0].commentOpenkey = randomWord.randomWord(false, 43);
     ctx.request.body[0].commentTime = time;
     ctx.request.body[0].commentEquipment = 'Chrome';
-
     // console.log(ctx.request.body[0]);
     // console.log('commentOpenkwy :' + commentOpenkwy);
     // ctx.websockify.on('message', (message) => {
     //     // 返回给前端的数据
     //     ctx.websocket.send(message)
     // });
-
     // console.log(ctx.request.body);
     ctx.response.body = ctx.request.body;
 }
 
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-10 17:35:56 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-10 17:35:56 
+ */
+let commentWcc = async (ctx, next) => {
+    ctx.request.body[0].commentOpenkey = randomWord.randomWord(false, 43);
+    ctx.request.body[0].commentTime = time;
+    /*  wccOpenkey:'',
+     wccUserNickname:'',
+     commentContent:'',
+     commentClass:'',
+     commentType:'',
+     commentState:'',
+     commentUserheadimg:'',
+     commentUsernickname:'',
+     commentTime:'',
+     commentUseropenkey:'' */
+    // console.log(ctx.request.body);
+    let tb_name = `yh_wccComment(id,wccOpenkey,wccUseropenkey,wccUserNickname,commentContent,commentClass,commentType,commentState,commentUserheadimg,commentUsernickname,commentTime,commentOpenkey) VALUES(0,?,?,?,?,?,?,?,?,?,?,?)`;
+    let tb_data = [ctx.request.body[0].wccOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].wccUserNickname, ctx.request.body[0].commentContent, ctx.request.body[0].commentClass, ctx.request.body[0].commentType, ctx.request.body[0].commentState, ctx.request.body[0].commentUserheadimg, ctx.request.body[0].commentUsernickname, ctx.request.body[0].commentTime, ctx.request.body[0].commentOpenkey];
+    await db.insertDatabase(tb_name, tb_data).then((data) => {
+        console.log(data);
+        ctx.response.body = ctx.request.body;
+    }).catch((err) => {
+        console.log(err);
+    })
+}
 
 module.exports = {
     'POST /commentWorkCollectionAll': commentWorkCollectionAll,
     'POST /commentCourseAll': commentCourseAll,
     'POST /commentUser': commentUser,
     'POST /commentCourse': commentCourse,
-    'POST /commentWorkCollection': commentWorkCollection
+    'POST /commentWorkCollection': commentWorkCollection,
+    'POST /commentWcc': commentWcc
 }

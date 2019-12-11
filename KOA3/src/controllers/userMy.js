@@ -2,7 +2,7 @@
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-04 18:04:22 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-04 18:29:22
+ * @Last Modified time: 2019-12-08 21:24:44
  */
 
 let db = require('../db/mysqldb');
@@ -288,7 +288,6 @@ var myUserheadimg = async (ctx, next) => {
     }).catch((err) => { console.log(err + '目录不存在'); });
     ctx.response.body = ctx.request.body;
 }
-
 var updataDatabase = (fileType, userNickname,tb_field) => {
     let userMybg = `http://192.168.2.128:3000${fileType.substr(1)}`;
     let userMybgSql = `UPDATE yh_user SET ${tb_field} = ? WHERE userNickname = ?`;

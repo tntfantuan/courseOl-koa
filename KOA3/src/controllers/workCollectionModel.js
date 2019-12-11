@@ -5,271 +5,14 @@ let db = require('../db/mysqldb');
 
 
 var workCollectionAll = async (ctx, next) => {
-    let workCollectionData = [{
-        id: 0,
-        wlcOpenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrcF',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download1.jpg',
-        workcollectionName: '掌门一对一学习 App UI作品展示',
-        workcollectionContent: '<img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/chQyaacccyQ/chQyaacccyQ/wc0.jpg" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/chQyaacccyQ/chQyaacccyQ/wc1.png" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/chQyaacccyQ/chQyaacccyQ/wc2.png" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/chQyaacccyQ/chQyaacccyQ/wc3.jpg" alt="">',
-        workcollectionPraise: 20,
-        workcollectionBrowse: 10,
-        workcollectionCollection: 10,
-        workcollectionUptime: '2019-10-01',
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: 'http://192.168.2.128:3000/src/assets/user/fantuan/fantuanHeadimg/9783961711581_1.jpg',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: 'lnHjOdTcjCkdzhfq35HKjqncGvyoh3CFp8zbLmnIIOL',
-    }, {
-        id: 1,
-        wlcOpenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrbb',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download2.jpg',
-        workcollectionName: 'LUCA 首屏 案例切换展示',
-        workcollectionContent: '<img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/2M4P5sFB3xrjC/2M4P5sFB3xrjC/b1.jpg" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/2M4P5sFB3xrjC/2M4P5sFB3xrjC/b2.jpg" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/2M4P5sFB3xrjC/2M4P5sFB3xrjC/b3.jpg" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/2M4P5sFB3xrjC/2M4P5sFB3xrjC/b4.jpg" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/2M4P5sFB3xrjC/2M4P5sFB3xrjC/b5.jpg" alt="">',
-        workcollectionPraise: 20,
-        workcollectionBrowse: 10,
-        workcollectionCollection: 10,
-        workcollectionUptime: '2019-10-01',
-        workcollectionCommentIdnumber: 112211222,
-        workcollectionUserPhone: 15239429719,
-        workcollectionUserHeadimg: 'http://192.168.2.128:3000/src/assets/user/饭饭/饭饭Headimg/IMG_0326.jpg',
-        workcollectionUserNickname: '饭饭',
-        workcollectionUserName: '饭饭',
-        workcollectionUserOpenkey: 'z1mCLjn6XyOz3WUX4kxmCi3pxqU2M4P5sFB3xrjCNhI'
-    }, {
-        id: 2,
-        wlcOpenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrww',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download3.jpg',
-        workcollectionName: '日常作品集整理',
-        workcollectionContent: '<img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/4P5sFB3xr/4P5sFB3xr/b1.jpg" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/4P5sFB3xr/4P5sFB3xr/b2.jpg" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/4P5sFB3xr/4P5sFB3xr/b3.jpg" alt=""><img style = "width: 100%;" class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/4P5sFB3xr/4P5sFB3xr/b4.jpg" alt="">',
-        workcollectionPraise: 20,
-        workcollectionBrowse: 10,
-        workcollectionCollection: 10,
-        workcollectionUptime: '2019-10-01',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: 'http://192.168.2.128:3000/src/assets/user/吴彦祖/吴彦祖Headimg/IMG_0322.jpg',
-        workcollectionUserNickname: '吴彦祖',
-        workcollectionUserName: '吴彦祖',
-        workcollectionUserOpenkey: 'CRAMy3NBs6klwE3UOlcRCK8EL1xIq5dDY5GSExIQMPc',
-    }, {
-        id: 3,
-        wlcOpenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrqq',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download4.jpg',
-        workcollectionName: '作品四',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 13603920211,
-        workcollectionUserHeadimg: 'http://192.168.2.128:3000/src/assets/user/KKK/KKK.jpg',
-        workcollectionUserNickname: 'zhangsan',
-        workcollectionUserName: '张三',
-        workcollectionUserOpenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbraa',
-    }, {
-        id: 4,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download5.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 5,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download6.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 6,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download7.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 7,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download8.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 8,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download0.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 9,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download9.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 10,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download10.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 11,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download11.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 12,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download12.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 13,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download13.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 14,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download14.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 15,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download15.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }, {
-        id: 16,
-        wlcOpenkey: '',
-        workcollectionHeadimg: 'http://192.168.2.128:3000/src/assets/img/workcollectionHeadImg/download17.jpg',
-        workcollectionName: '作品五',
-        workcollectionContent: '',
-        workcollectionPraise: '20',
-        workcollectionCollection: '10',
-        workcollectionUptime: '',
-        workcollectionCommentIdnumber: null,
-        workcollectionUserPhone: 17630022236,
-        workcollectionUserHeadimg: '',
-        workcollectionUserNickname: 'fantuan',
-        workcollectionUserName: '刘志远',
-        workcollectionUserOpenkey: '112211221',
-    }];
     let tb_name = 'yh_workCollection';
-
     await db.selectDatabase(tb_name).then((data) => {
+        for (var i = 0; i < data.length; i++) {
+            delete data[i].workcollectionUserPhone;
+        }
         ctx.response.body = data;
     }).catch((err) => {
         console.log(err);
-        ctx.response.body = workCollectionData;
     });
 
 }
@@ -281,7 +24,55 @@ var workCollectionItem = async (ctx, next) => {
     <img class="essayContentboxImg" src="http://192.168.2.128:3000/src/assets/workcollection/chQyaacccyQ/chQyaacccyQ/wc3.jpg" alt="">`
 }
 
+var essayCollect = async (ctx, next) => {
+    let tb_condition = `wccUseropenkey,wlcOpenkey`;
+    let tb_name = 'yh_wccCollect';
+    let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}'`;
+    await db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
+        console.log(data);
+        if (data.length == 0) {
+            let tb_name = `yh_wccCollect(id,wlcOpenkey,wccUseropenkey,workcollectionHeadimg,workcollectionName,workcollectionContent,workcollectionPraise,workcollectionBrowse,workcollectionCollection,workcollectionUptime,workcollectionUserHeadimg,workcollectionUserNickname,workcollectionUserOpenkey) VALUES(0,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            let tb_data = [ctx.request.body[0].wlcOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].workcollectionHeadimg, ctx.request.body[0].workcollectionName, ctx.request.body[0].workcollectionContent, ctx.request.body[0].workcollectionPraise, ctx.request.body[0].workcollectionBrowse, ctx.request.body[0].workcollectionCollection, ctx.request.body[0].workcollectionUptime, ctx.request.body[0].workcollectionUserHeadimg, ctx.request.body[0].workcollectionUserNickname, ctx.request.body[0].workcollectionUserOpenkey];
+            db.insertDatabase(tb_name, tb_data).then(data => {
+
+                let tb_name = 'yh_workCollection';
+                let tb_setName = 'workcollectionCollection';
+                let tb_whereName = 'wlcOpenkey';
+                let tb_data = { tb_setData: ctx.request.body[0].workcollectionCollection, tb_whereData: ctx.request.body[0].wlcOpenkey };
+
+                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+                }).catch(err => {
+                    console.log(err);
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+            ctx.response.body = '200';
+
+        } else if (data.length == 1) {
+            let tb_name = 'yh_wccCollect';
+            let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND wlcOpenkey = '${ctx.request.body[0].wlcOpenkey}'`;
+            db.deleteDataDb(tb_name, tb_whereName).then(data => {
+            }).catch(err => {
+                console.log(err)
+                ctx.response.body = '取消收藏失败';
+            });
+            ctx.response.body = '400';
+        }
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
+var essayPraise = async (ctx, next) => {
+    console.log(ctx.request.body);
+
+}
+
+
 
 module.exports = {
-    'GET /workCollectionAll': workCollectionAll
+    'GET /workCollectionAll': workCollectionAll,
+    'POST /eCollect': essayCollect,
+    'POST /ePraise': essayPraise
 }
