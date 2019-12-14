@@ -1,282 +1,354 @@
+let db = require('../db/mysqldb');
+let randomWord = require('../utils/randomkey/randomKey');
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by: mikey.zhiyuanL
+ * @Last Modified time: 2019-12-13 14:56:54
+ */
 var courseAll = async (ctx, next) => {
     let courseData = [{
         id: 1,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/coursePs.jpg',
-        courseType: 'ps',
-        courseName: 'PS基础教程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第一章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: 'ps/PS基础教程.mp4'
+        cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
+        cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/coursePs.jpg',
+        cType: 'ps',
+        cName: 'PS基础教程',
+        cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS',
+        cChapter: '第一章',
+        cUptime: '2019-10-01',
+        cRank: '进阶',
+        cTcname: '李申',
+        cTccoursetype: 'ps',
+        cBrowsenumber: 33,
+        cLearnnumber: 100,
+        cPraisenumber: 20,
+        cCollectionnumber: 20,
+        cEWM: '',
+        cPath: 'ps/PS基础教程.mp4'
     }, {
         id: 2,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAe.jpg',
-        courseType: 'ps',
-        courseName: 'Photoshop1 基础课程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第二章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ae',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: 'ae/Aejc.mp4'
+        cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
+        cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAe.jpg',
+        cType: 'ps',
+        cName: 'Photoshop1 基础课程',
+        cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS',
+        cChapter: '第二章',
+        cUptime: '2019-10-01',
+        cRank: '进阶',
+        cTcname: '李申',
+        cTccoursetype: 'ae',
+        cBrowsenumber: 33,
+        cLearnnumber: 100,
+        cPraisenumber: 20,
+        cCollectionnumber: 20,
+        cEWM: '',
+        cPath: 'ae/Aejc.mp4'
     }, {
         id: 3,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAi.jpg',
-        courseType: 'ai',
-        courseName: 'Ai基础教程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第三章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ae',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: 'ps/ExcitableBadCarpenterant-mobile.mp4'
+        cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
+        cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAi.jpg',
+        cType: 'ai',
+        cName: 'Ai基础教程',
+        cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS',
+        cChapter: '第三章',
+        cUptime: '2019-10-01',
+        cRank: '进阶',
+        cTcname: '李申',
+        cTccoursetype: 'ae',
+        cBrowsenumber: 33,
+        cLearnnumber: 100,
+        cPraisenumber: 20,
+        cCollectionnumber: 20,
+        cEWM: '',
+        cPath: 'ps/ExcitableBadCarpenterant-mobile.mp4'
     }, {
         id: 4,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseSketch.jpg',
-        courseType: 'sketch',
-        courseName: 'Sketch基础教程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第四章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: 'ps/SeparateUnlawfulGodwit-mobile.mp4'
+        cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
+        cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseSketch.jpg',
+        cType: 'sketch',
+        cName: 'Sketch基础教程',
+        cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS',
+        cChapter: '第四章',
+        cUptime: '2019-10-01',
+        cRank: '进阶',
+        cTcname: '李申',
+        cTccoursetype: 'ps',
+        cBrowsenumber: 33,
+        cLearnnumber: 100,
+        cPraisenumber: 20,
+        cCollectionnumber: 20,
+        cEWM: '',
+        cPath: 'ps/SeparateUnlawfulGodwit-mobile.mp4'
     }, {
         id: 5,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseDx.jpg',
-        courseType: 'dx',
-        courseName: '动效基础教程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第五章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: ''
-    }, {
-        id: 6,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseC4d.jpg',
-        courseType: 'c4d',
-        courseName: 'C4D基础教程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第六章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: ''
-    }, {
-        id: 7,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseC4d进阶1.jpg',
-        courseType: 'c4d',
-        courseName: 'C4D进阶教程1',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第六章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: ''
-    }, {
-        id: 8,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseC4d进阶2.jpg',
-        courseType: 'ps',
-        courseName: 'C4D进阶教程2',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第六章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: ''
-    }, {
-        id: 9,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseC4d进阶3.jpg',
-        courseType: 'ps',
-        courseName: 'C4D进阶教程3',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第六章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: ''
-    }, {
-        id: 10,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAe.jpg',
-        courseType: 'ps',
-        courseName: 'PS基础教程10',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第六章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: ''
-    }, {
-        id: 11,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAe.jpg',
-        courseType: 'ps',
-        courseName: 'PS基础教程11',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第六章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: ''
-    }, {
-        id: 12,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAe.jpg',
-        courseType: 'ps',
-        courseName: 'PS基础教程12',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第六章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: ''
+        cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
+        cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseDx.jpg',
+        cType: 'dx',
+        cName: '动效基础教程',
+        cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS',
+        cChapter: '第五章',
+        cUptime: '2019-10-01',
+        cRank: '进阶',
+        cTcname: '李申',
+        cTccoursetype: 'ps',
+        cBrowsenumber: 33,
+        cLearnnumber: 100,
+        cPraisenumber: 20,
+        cCollectionnumber: 20,
+        cEWM: '',
+        cPath: ''
     }];
-    ctx.response.body = courseData;
+    let tb_name = 'yh_course';
+    await db.selectDatabase(tb_name).then((data) => {
+        for (var i = 0; i < data.length; i++) {
+            delete data[i].workcollectionUserPhone;
+        }
+        ctx.response.body = data;
+    }).catch((err) => {
+        console.log(err);
+    });
 }
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-12 16:35:20 
+ */
 var courseRecommend = async (ctx, next) => {
     let courseRecommenddata = [{
         id: 1,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/coursePs.jpg',
-        courseType: 'ps',
-        courseName: 'PS基础教程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第一章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ps',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: 'ps/PS基础教程.mp4'
+        cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
+        cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/coursePs.jpg',
+        cType: 'ps',
+        cName: 'PS基础教程',
+        cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS',
+        cChapter: '第一章',
+        cUptime: '2019-10-01',
+        cRank: '进阶',
+        cTcname: '李申',
+        cTccoursetype: 'ps',
+        cBrowsenumber: 33,
+        cLearnnumber: 100,
+        cPraisenumber: 20,
+        cCollectionnumber: 20,
+        cEWM: '',
+        cPath: 'ps/PS基础教程.mp4'
     }, {
         id: 2,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAe.jpg',
-        courseType: 'ps',
-        courseName: 'Photoshop1 基础课程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第二章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ae',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: 'ae/Aejc.mp4'
+        cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
+        cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAe.jpg',
+        cType: 'ps',
+        cName: 'Photoshop1 基础课程',
+        cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
+        cChapter: '第二章',
+        cUptime: '2019-10-01',
+        cRank: '进阶',
+        cTcname: '李申',
+        cTccoursetype: 'ae',
+        cBrowsenumber: 33,
+        cLearnnumber: 100,
+        cPraisenumber: 20,
+        cCollectionnumber: 20,
+        cEWM: '',
+        cPath: 'ae/Aejc.mp4'
     }, {
         id: 3,
-        courseUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
-        courseHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAi.jpg',
-        courseType: 'ai',
-        courseName: 'Ai基础教程',
-        courseIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
-        courseChapter: '第三章',
-        courseUptime: '2019-10-01',
-        courseRank: '进阶',
-        courseTcname: '李申',
-        courseTccoursetype: 'ae',
-        courseBrowsenumber: 33,
-        courseLearnnumber: 100,
-        coursePraisenumber: 20,
-        courseCollectionnumber: 20,
-        courseEWM: '',
-        coursePath: 'ps/ExcitableBadCarpenterant-mobile.mp4'
+        cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
+        cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAi.jpg',
+        cType: 'ai',
+        cName: 'Ai基础教程',
+        cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
+        cChapter: '第三章',
+        cUptime: '2019-10-01',
+        cRank: '进阶',
+        cTcname: '李申',
+        cTccoursetype: 'ae',
+        cBrowsenumber: 33,
+        cLearnnumber: 100,
+        cPraisenumber: 20,
+        cCollectionnumber: 20,
+        cEWM: '',
+        cPath: 'ps/ExcitableBadCarpenterant-mobile.mp4'
     }];
     ctx.response.body = courseRecommenddata;
 }
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-12 16:35:20 
+ */
+var courseLearn = async (ctx, next) => {
+    // let cOpenkey = randomWord.randomWord(false, 43);
+    // console.log(cOpenkey);
+    // console.log(ctx.request.body);
+    let tb_name = 'yh_course';
+    let tb_setName1 = 'cBrowsenumber';
+    let tb_setName2 = 'cLearnnumber';
+    let tb_whereName = 'cOpenkey';
+    let tb_data = { tb_setData1: ctx.request.body[0].cBrowsenumber, tb_setData2: ctx.request.body[0].cLearnnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+    await db.upDataDb_course(tb_name, tb_setName1, tb_setName2, tb_whereName, tb_data).then(data => {
+        ctx.response.body = '200';
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-12 16:35:20 
+ */
+var courseCollect = async (ctx, next) => {
+    // console.log(ctx.request.body);
+    let tb_condition = `wccUseropenkey,cOpenkey`;
+    let tb_name = 'yh_cCollect';
+    let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}'`;
+
+    await db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
+
+        if (data.length == 0) {
+
+            let tb_name = `yh_cCollect(id,cOpenkey,wccUseropenkey,cUseropenkey,cUserheadimg,cHeadimg,cType,cTitle,cIntroduce,cChapter,cRank,cTcname,cTccoursetype,cUptime,cBrowsenumber,cLearnnumber,cPraisenumber,cCollectionnumber,cEWM) VALUES(0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            let tb_data = [ctx.request.body[0].cOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].cUseropenkey, ctx.request.body[0].cUserheadimg, ctx.request.body[0].cHeadimg, ctx.request.body[0].cType, ctx.request.body[0].cTitle, ctx.request.body[0].cIntroduce, ctx.request.body[0].cChapter, ctx.request.body[0].cRank, ctx.request.body[0].cTcname, ctx.request.body[0].cTccoursetype, ctx.request.body[0].cUptime, ctx.request.body[0].cBrowsenumber, ctx.request.body[0].cLearnnumber, ctx.request.body[0].cPraisenumber, ctx.request.body[0].cCollectionnumber, ctx.request.body[0].cEWM];
+
+            db.insertDatabase(tb_name, tb_data).then(data => {
+
+                let tb_name = 'yh_course';
+                let tb_setName = 'cCollectionnumber';
+                let tb_whereName = 'cOpenkey';
+                let tb_data = { tb_setData: ctx.request.body[0].cCollectionnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+                    let tb_name = 'yh_cPraise';
+                    let tb_setName = 'cCollectionnumber';
+                    let tb_whereName = 'cOpenkey';
+                    let tb_data = { tb_setData: ctx.request.body[0].cCollectionnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                }).catch(err => {
+                    console.log(err);
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+            ctx.response.body = '200';
+        } else if (data.length == 1) {
+            let tb_name = 'yh_cCollect';
+            let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
+            db.deleteDataDb(tb_name, tb_whereName).then(data => {
+                let tb_name = 'yh_course';
+                let tb_setName = 'cCollectionnumber';
+                let tb_whereName = 'cOpenkey';
+                let THISwcCollection = parseInt(ctx.request.body[0].cCollectionnumber) - 2
+                let tb_data = { tb_setData: THISwcCollection, tb_whereData: ctx.request.body[0].cOpenkey };
+                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+                }).catch(err => {
+                    console.log(err);
+                });
+            }).catch(err => {
+                console.log(err)
+                ctx.response.body = '取消收藏失败';
+            });
+            ctx.response.body = '400';
+        }
+    }).catch(err => {
+        console.log(err)
+        ctx.response.body = '取消收藏失败';
+    });
+}
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-12 16:35:20 
+ */
+var coursePraise = async (ctx, next) => {
+    // console.log(ctx.request.body);
+    let tb_condition = `wccUseropenkey,cOpenkey`;
+    let tb_name = 'yh_cPraise';
+    let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}'`;
+
+    await db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
+
+        if (data.length == 0) {
+
+            let tb_name = `yh_cPraise(id,cOpenkey,wccUseropenkey,cUseropenkey,cUserheadimg,cHeadimg,cType,cTitle,cIntroduce,cChapter,cRank,cTcname,cTccoursetype,cUptime,cBrowsenumber,cLearnnumber,cPraisenumber,cCollectionnumber,cEWM) VALUES(0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+            let tb_data = [ctx.request.body[0].cOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].cUseropenkey, ctx.request.body[0].cUserheadimg, ctx.request.body[0].cHeadimg, ctx.request.body[0].cType, ctx.request.body[0].cTitle, ctx.request.body[0].cIntroduce, ctx.request.body[0].cChapter, ctx.request.body[0].cRank, ctx.request.body[0].cTcname, ctx.request.body[0].cTccoursetype, ctx.request.body[0].cUptime, ctx.request.body[0].cBrowsenumber, ctx.request.body[0].cLearnnumber, ctx.request.body[0].cPraisenumber, ctx.request.body[0].cCollectionnumber, ctx.request.body[0].cEWM];
+
+            db.insertDatabase(tb_name, tb_data).then(data => {
+
+                let tb_name = 'yh_course';
+                let tb_setName = 'cPraisenumber';
+                let tb_whereName = 'cOpenkey';
+                let tb_data = { tb_setData: ctx.request.body[0].cPraisenumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+                    let tb_name = 'yh_cCollect';
+                    let tb_setName = 'cPraisenumber';
+                    let tb_whereName = 'cOpenkey';
+                    let tb_data = { tb_setData: ctx.request.body[0].cPraisenumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                }).catch(err => {
+                    console.log(err);
+                });
+            }).catch(err => {
+                console.log(err);
+            });
+            ctx.response.body = '200';
+        } else if (data.length == 1) {
+            let tb_name = 'yh_cPraise';
+            let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
+            db.deleteDataDb(tb_name, tb_whereName).then(data => {
+
+                let tb_name = 'yh_course';
+                let tb_setName = 'cPraisenumber';
+                let tb_whereName = 'cOpenkey';
+                let THISwcCollection = parseInt(ctx.request.body[0].cPraisenumber) - 2;
+                let tb_data = { tb_setData: THISwcCollection, tb_whereData: ctx.request.body[0].cOpenkey };
+                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+                }).catch(err => {
+                    console.log(err);
+                });
+            }).catch(err => {
+                console.log(err)
+                ctx.response.body = '取消收藏失败';
+            });
+            ctx.response.body = '400';
+        }
+    }).catch(err => {
+        console.log(err)
+        ctx.response.body = '取消收藏失败';
+    });
+}
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-12 16:35:20 
+ */
+var courseComment = async (ctx, next) => { }
+
 module.exports = {
     'GET /courseAll': courseAll,
-    'POST /courseRecommend':courseRecommend
+    'POST /courseRecommend': courseRecommend,
+    'POST /cLearn': courseLearn,
+    'POST /cCollect': courseCollect,
+    'POST /cPraise': coursePraise,
+    'POST /cComment': courseComment
 }
+

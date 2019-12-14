@@ -1,12 +1,23 @@
 let fs = require('fs');
 
-/* 200 */
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by: mikey.zhiyuanL
+ * @Last Modified time: 2019-12-12 23:36:03
+ */
 var coursePlayerCs1 = async (ctx, next) => {
 
     // ctx.request.body;
     ctx.body = '视频测试1：2000';
 }
-/* 200 */
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-12 16:35:20 
+ */
 var coursePlayerCs2 = async (ctx, next) => {
     const coursePath = './src/111.mp4';
     const courseStat = fs.statSync(coursePath);
@@ -20,18 +31,21 @@ var coursePlayerCs2 = async (ctx, next) => {
     ctx.res.writeHead(200, head);
     ctx.body = fs.createReadStream(coursePath);
 }
-/* 200 */
-var coursePlayer = async (ctx, next) => {
 
-    console.log('ctxUrl :'+ctx.url);
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-12 16:35:20 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-12 16:35:20 
+ */
+var coursePlayer = async (ctx, next) => {
+    // console.log('ctxUrl :' + ctx.url);
     // console.log(ctx.querystring.split('=')[1]);
 
-    // const coursePath = './src/assets/course/' + ctx.querystring.split('=')[1];
-    const coursePath = `./src/assets/course/${ctx.params.courseType}/${ctx.params.courseName}.mp4`;
-    const courseStat = fs.statSync(coursePath);
-    const fileSize = courseStat.size;
+    let coursePath = `./src/assets/course/${ctx.params.courseType}/${ctx.params.courseName}.mp4`;
+    let courseStat = fs.statSync(coursePath);
+    let fileSize = courseStat.size;
     let range = ctx.req.headers.range;
-
     let head = {
         'Content-Length': fileSize,
         'Content-Type': 'video/mp4'

@@ -24,7 +24,7 @@ let pool = mysql.createPool({
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-09 10:35:10 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-10 18:04:22
+ * @Last Modified time: 2019-12-13 11:40:51
  */
 // var query = (sql, arr, callback) => {
 //     //建立链接
@@ -72,6 +72,8 @@ var insertDatabase = (tb_name, tb_data) => {
     return new Promise((resolve, reject) => {
         let insertSql = `INSERT INTO ${tb_name}`;
         let insertParams = tb_data;
+        // console.log(insertSql);
+        // console.log(insertParams);
         query(insertSql, insertParams).then((data) => {
             resolve(data);
         }).catch((err) => {
@@ -115,6 +117,18 @@ var sWhereDb = (tb_condition, tb_name, tb_whereName) => {
     });
 }
 
+var sAllwhereDb = (tb_condition, tb_name, tb_whereName) => {
+    return new Promise((resolve, reject) => {
+        let sWhereSql = `SELECT ${tb_condition} FROM ${tb_name} WHERE ${tb_whereName}`;
+        // console.log(sWhereSql);
+        query(sWhereSql).then(data => {
+            resolve(data)
+        }).catch(err => {
+            reject(err)
+        });
+    });
+}
+
 /*
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-10 17:35:56 
@@ -139,11 +153,29 @@ var upDataDb = (tb_name, tb_setName, tb_whereName, tb_data) => {
  * @Last Modified by:   mikey.zhiyuanL 
  * @Last Modified time: 2019-12-10 17:35:56 
  */
+var upDataDb_course = (tb_name, tb_setName1, tb_setName2, tb_whereName, tb_data) => {
+    return new Promise((resolve, reject) => {
+        let upDataSql = `UPDATE ${tb_name} SET ${tb_setName1} = ? , ${tb_setName2} = ? WHERE ${tb_whereName} = ?`;
+        let upDataParams = [tb_data.tb_setData1, tb_data.tb_setData2, tb_data.tb_whereData];
+        query(upDataSql, upDataParams).then(data => {
+            resolve(data);
+        }).catch(err => {
+            reject('error:' + err);
+        })
+    });
+}
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-10 17:35:56 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-10 17:35:56 
+ */
 var deleteDataDb = (tb_name, tb_whereName) => {
     return new Promise((resolve, reject) => {
         let deleteSql = `DELETE FROM ${tb_name} WHERE ${tb_whereName}`;
         // let deleteParams = ``;
-        console.log(deleteSql);
+        // console.log(deleteSql);
         // console.log(deleteParams);
         query(deleteSql).then(data => {
             resolve(data);
@@ -178,5 +210,7 @@ module.exports = {
     insertDatabase,
     sWhereDb,
     upDataDb,
-    deleteDataDb
+    upDataDb_course,
+    deleteDataDb,
+    sAllwhereDb
 };
