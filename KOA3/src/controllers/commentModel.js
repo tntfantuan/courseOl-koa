@@ -2,7 +2,7 @@
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-10 17:35:56 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-13 15:16:15
+ * @Last Modified time: 2019-12-16 11:31:20
  */
 var sd = require('silly-datetime');
 var randomWord = require('../utils/randomkey/randomKey');
@@ -66,7 +66,6 @@ let commentCourseAll = async (ctx, next) => {
     let tb_whereWlcOpenkey = `wccOpenkey = '${ctx.request.body[0].cOpenkey}'`;
     await db.sWhereDb(tb_condition, tb_name, tb_whereWlcOpenkey).then(data => {
         let thisAllcomment = data;
-        // console.log(thisAllcomment);
         ctx.response.body = thisAllcomment;
     }).catch(err => {
         console.log(err);

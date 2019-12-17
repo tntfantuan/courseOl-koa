@@ -5,7 +5,7 @@ let randomWord = require('../utils/randomkey/randomKey');
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-12 16:35:20 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-13 14:56:54
+ * @Last Modified time: 2019-12-17 14:47:43
  */
 var courseAll = async (ctx, next) => {
     let courseData = [{
@@ -182,9 +182,7 @@ var courseRecommend = async (ctx, next) => {
  * @Last Modified time: 2019-12-12 16:35:20 
  */
 var courseLearn = async (ctx, next) => {
-    // let cOpenkey = randomWord.randomWord(false, 43);
-    // console.log(cOpenkey);
-    // console.log(ctx.request.body);
+
     let tb_name = 'yh_course';
     let tb_setName1 = 'cBrowsenumber';
     let tb_setName2 = 'cLearnnumber';
@@ -206,58 +204,83 @@ var courseLearn = async (ctx, next) => {
  */
 var courseCollect = async (ctx, next) => {
     // console.log(ctx.request.body);
-    let tb_condition = `wccUseropenkey,cOpenkey`;
+    let tb_condition = `cOpenkey`;
     let tb_name = 'yh_cCollect';
-    let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}'`;
+    let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
 
     await db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
 
         if (data.length == 0) {
 
-            let tb_name = `yh_cCollect(id,cOpenkey,wccUseropenkey,cUseropenkey,cUserheadimg,cHeadimg,cType,cTitle,cIntroduce,cChapter,cRank,cTcname,cTccoursetype,cUptime,cBrowsenumber,cLearnnumber,cPraisenumber,cCollectionnumber,cEWM) VALUES(0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-            let tb_data = [ctx.request.body[0].cOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].cUseropenkey, ctx.request.body[0].cUserheadimg, ctx.request.body[0].cHeadimg, ctx.request.body[0].cType, ctx.request.body[0].cTitle, ctx.request.body[0].cIntroduce, ctx.request.body[0].cChapter, ctx.request.body[0].cRank, ctx.request.body[0].cTcname, ctx.request.body[0].cTccoursetype, ctx.request.body[0].cUptime, ctx.request.body[0].cBrowsenumber, ctx.request.body[0].cLearnnumber, ctx.request.body[0].cPraisenumber, ctx.request.body[0].cCollectionnumber, ctx.request.body[0].cEWM];
+            let tb_condition = `*`;
+            let tb_name = 'yh_course';
+            let tb_whereName = `cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
 
-            db.insertDatabase(tb_name, tb_data).then(data => {
+            db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
 
-                let tb_name = 'yh_course';
-                let tb_setName = 'cCollectionnumber';
-                let tb_whereName = 'cOpenkey';
-                let tb_data = { tb_setData: ctx.request.body[0].cCollectionnumber, tb_whereData: ctx.request.body[0].cOpenkey };
-
-                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
-                    let tb_name = 'yh_cPraise';
-                    let tb_setName = 'cCollectionnumber';
-                    let tb_whereName = 'cOpenkey';
-                    let tb_data = { tb_setData: ctx.request.body[0].cCollectionnumber, tb_whereData: ctx.request.body[0].cOpenkey };
-
-                    db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                }).catch(err => {
-                    console.log(err);
+                let thisCcnumber = data[0].cCollectionnumber + 1;
+                let tb_name = `yh_cCollect(id,cOpenkey,wccUseropenkey,cUseropenkey,cUserheadimg,cHeadimg,cType,cTitle,cIntroduce,cChapter,cRank,cTcname,cTccoursetype,cUptime,cBrowsenumber,cLearnnumber,cPraisenumber,cCollectionnumber,cEWM) VALUES(0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+                let tb_data = [ctx.request.body[0].cOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].cUseropenkey, ctx.request.body[0].cUserheadimg, ctx.request.body[0].cHeadimg, ctx.request.body[0].cType, ctx.request.body[0].cTitle, ctx.request.body[0].cIntroduce, ctx.request.body[0].cChapter, ctx.request.body[0].cRank, ctx.request.body[0].cTcname, ctx.request.body[0].cTccoursetype, ctx.request.body[0].cUptime, ctx.request.body[0].cBrowsenumber, ctx.request.body[0].cLearnnumber, ctx.request.body[0].cPraisenumber, thisCcnumber, ctx.request.body[0].cEWM];
+                db.insertDatabase(tb_name, tb_data).then(data => { }).catch(err => {
+                    console.log('insertDatabase:' + err);
                 });
+
+                let utb_name = 'yh_course';
+                let utb_setName = 'cCollectionnumber';
+                let utb_whereName = 'cOpenkey';
+                let utb_data = { tb_setData: thisCcnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+                db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => {
+                    let utb_name = 'yh_cPraise';
+                    let utb_setName = 'cCollectionnumber';
+                    let utb_whereName = 'cOpenkey';
+                    let utb_data = { tb_setData: thisCcnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => { }).catch(err => { console.log(err); });
+
+                    let u2tb_name = 'yh_cCollect';
+                    let u2tb_setName = 'cCollectionnumber';
+                    let u2tb_whereName = 'cOpenkey';
+                    let u2tb_data = { tb_setData: thisCcnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(u2tb_name, u2tb_setName, u2tb_whereName, u2tb_data).then(data => { }).catch(err => { console.log(err); });
+                }).catch(err => { console.log('upDataDb:' + err); });
             }).catch(err => {
                 console.log(err);
             });
+
             ctx.response.body = '200';
         } else if (data.length == 1) {
-            let tb_name = 'yh_cCollect';
-            let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
-            db.deleteDataDb(tb_name, tb_whereName).then(data => {
-                let tb_name = 'yh_course';
-                let tb_setName = 'cCollectionnumber';
-                let tb_whereName = 'cOpenkey';
-                let THISwcCollection = parseInt(ctx.request.body[0].cCollectionnumber) - 2
-                let tb_data = { tb_setData: THISwcCollection, tb_whereData: ctx.request.body[0].cOpenkey };
-                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
-                }).catch(err => {
-                    console.log(err);
-                });
-            }).catch(err => {
-                console.log(err)
-                ctx.response.body = '取消收藏失败';
-            });
+
+            let tb_condition = `*`;
+            let tb_name = 'yh_course';
+            let tb_whereName = `cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
+
+            db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
+                let thisCcnumber = data[0].cCollectionnumber - 1;
+                let tb_name = 'yh_cCollect';
+                let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
+                db.deleteDataDb(tb_name, tb_whereName).then(data => {
+                    let utb_name = 'yh_cCollect';
+                    let utb_setName = 'cCollectionnumber';
+                    let utb_whereName = 'cOpenkey';
+                    let utb_data = { tb_setData: thisCcnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => { }).catch(err => { console.log(err); });
+                }).catch(err => { console.log(err); });
+
+                let utb_name = 'yh_course';
+                let utb_setName = 'cCollectionnumber';
+                let utb_whereName = 'cOpenkey';
+                let utb_data = { tb_setData: thisCcnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+                db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => {
+                    let utb_name = 'yh_cPraise';
+                    let utb_setName = 'cCollectionnumber';
+                    let utb_whereName = 'cOpenkey';
+                    let utb_data = { tb_setData: thisCcnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => { }).catch(err => { console.log(err); });
+                }).catch(err => { console.log('upDataDb:' + err); });
+            }).catch(err => { console.log(err) });
             ctx.response.body = '400';
         }
     }).catch(err => {
@@ -274,59 +297,82 @@ var courseCollect = async (ctx, next) => {
  */
 var coursePraise = async (ctx, next) => {
     // console.log(ctx.request.body);
-    let tb_condition = `wccUseropenkey,cOpenkey`;
+    let tb_condition = `cOpenkey`;
     let tb_name = 'yh_cPraise';
-    let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}'`;
+    let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
+
 
     await db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
 
         if (data.length == 0) {
 
-            let tb_name = `yh_cPraise(id,cOpenkey,wccUseropenkey,cUseropenkey,cUserheadimg,cHeadimg,cType,cTitle,cIntroduce,cChapter,cRank,cTcname,cTccoursetype,cUptime,cBrowsenumber,cLearnnumber,cPraisenumber,cCollectionnumber,cEWM) VALUES(0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
-            let tb_data = [ctx.request.body[0].cOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].cUseropenkey, ctx.request.body[0].cUserheadimg, ctx.request.body[0].cHeadimg, ctx.request.body[0].cType, ctx.request.body[0].cTitle, ctx.request.body[0].cIntroduce, ctx.request.body[0].cChapter, ctx.request.body[0].cRank, ctx.request.body[0].cTcname, ctx.request.body[0].cTccoursetype, ctx.request.body[0].cUptime, ctx.request.body[0].cBrowsenumber, ctx.request.body[0].cLearnnumber, ctx.request.body[0].cPraisenumber, ctx.request.body[0].cCollectionnumber, ctx.request.body[0].cEWM];
+            let tb_condition = `*`;
+            let tb_name = 'yh_course';
+            let tb_whereName = `cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
 
-            db.insertDatabase(tb_name, tb_data).then(data => {
+            db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
 
-                let tb_name = 'yh_course';
-                let tb_setName = 'cPraisenumber';
-                let tb_whereName = 'cOpenkey';
-                let tb_data = { tb_setData: ctx.request.body[0].cPraisenumber, tb_whereData: ctx.request.body[0].cOpenkey };
+                let thisCpnumber = data[0].cPraisenumber + 1;
+                let tb_name = `yh_cPraise(id,cOpenkey,wccUseropenkey,cUseropenkey,cUserheadimg,cHeadimg,cType,cTitle,cIntroduce,cChapter,cRank,cTcname,cTccoursetype,cUptime,cBrowsenumber,cLearnnumber,cPraisenumber,cCollectionnumber,cEWM) VALUES(0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+                let tb_data = [ctx.request.body[0].cOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].cUseropenkey, ctx.request.body[0].cUserheadimg, ctx.request.body[0].cHeadimg, ctx.request.body[0].cType, ctx.request.body[0].cTitle, ctx.request.body[0].cIntroduce, ctx.request.body[0].cChapter, ctx.request.body[0].cRank, ctx.request.body[0].cTcname, ctx.request.body[0].cTccoursetype, ctx.request.body[0].cUptime, ctx.request.body[0].cBrowsenumber, ctx.request.body[0].cLearnnumber, thisCpnumber, ctx.request.body[0].cCollectionnumber, ctx.request.body[0].cEWM];
+                db.insertDatabase(tb_name, tb_data).then(data => { }).catch(err => { console.log('insertDatabase:' + err); });
 
-                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
-                    let tb_name = 'yh_cCollect';
-                    let tb_setName = 'cPraisenumber';
-                    let tb_whereName = 'cOpenkey';
-                    let tb_data = { tb_setData: ctx.request.body[0].cPraisenumber, tb_whereData: ctx.request.body[0].cOpenkey };
+                let utb_name = 'yh_course';
+                let utb_setName = 'cPraisenumber';
+                let utb_whereName = 'cOpenkey';
+                let utb_data = { tb_setData: thisCpnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+                db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => {
+                    let utb_name = 'yh_cPraise';
+                    let utb_setName = 'cPraisenumber';
+                    let utb_whereName = 'cOpenkey';
+                    let utb_data = { tb_setData: thisCpnumber, tb_whereData: ctx.request.body[0].cOpenkey };
 
-                    db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
-                    }).catch(err => {
-                        console.log(err);
-                    });
-                }).catch(err => {
-                    console.log(err);
-                });
+                    db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => { }).catch(err => { console.log(err); });
+
+                    let u2tb_name = 'yh_cCollect';
+                    let u2tb_setName = 'cPraisenumber';
+                    let u2tb_whereName = 'cOpenkey';
+                    let u2tb_data = { tb_setData: thisCpnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(u2tb_name, u2tb_setName, u2tb_whereName, u2tb_data).then(data => { }).catch(err => { console.log(err); });
+                }).catch(err => { console.log('upDataDb:' + err); });
             }).catch(err => {
                 console.log(err);
             });
+
             ctx.response.body = '200';
         } else if (data.length == 1) {
-            let tb_name = 'yh_cPraise';
-            let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
-            db.deleteDataDb(tb_name, tb_whereName).then(data => {
+            let tb_condition = `*`;
+            let tb_name = 'yh_course';
+            let tb_whereName = `cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
 
-                let tb_name = 'yh_course';
-                let tb_setName = 'cPraisenumber';
-                let tb_whereName = 'cOpenkey';
-                let THISwcCollection = parseInt(ctx.request.body[0].cPraisenumber) - 2;
-                let tb_data = { tb_setData: THISwcCollection, tb_whereData: ctx.request.body[0].cOpenkey };
-                db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
-                }).catch(err => {
-                    console.log(err);
-                });
-            }).catch(err => {
-                console.log(err)
-                ctx.response.body = '取消收藏失败';
-            });
+            db.sWhereDb(tb_condition, tb_name, tb_whereName).then(data => {
+                let thisCpnumber = data[0].cPraisenumber - 1;
+                let tb_name = 'yh_cPraise';
+                let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}' AND cOpenkey = '${ctx.request.body[0].cOpenkey}'`;
+                db.deleteDataDb(tb_name, tb_whereName).then(data => {
+                    let u2tb_name = 'yh_cPraise';
+                    let u2tb_setName = 'cPraisenumber';
+                    let u2tb_whereName = 'cOpenkey';
+                    let u2tb_data = { tb_setData: thisCpnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(u2tb_name, u2tb_setName, u2tb_whereName, u2tb_data).then(data => { }).catch(err => { console.log(err); });
+                }).catch(err => { console.log(err); });
+
+                let utb_name = 'yh_course';
+                let utb_setName = 'cPraisenumber';
+                let utb_whereName = 'cOpenkey';
+                let utb_data = { tb_setData: thisCpnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+                db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => {
+                    let utb_name = 'yh_cCollect';
+                    let utb_setName = 'cPraisenumber';
+                    let utb_whereName = 'cOpenkey';
+                    let utb_data = { tb_setData: thisCpnumber, tb_whereData: ctx.request.body[0].cOpenkey };
+
+                    db.upDataDb(utb_name, utb_setName, utb_whereName, utb_data).then(data => { }).catch(err => { console.log(err); });
+                }).catch(err => { console.log('upDataDb:' + err); });
+            }).catch(err => { console.log(err) });
+
             ctx.response.body = '400';
         }
     }).catch(err => {
