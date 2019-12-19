@@ -1,9 +1,20 @@
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-17 16:20:40 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-17 16:20:40 
+ */
 var sd = require('silly-datetime');
 let db = require('../db/mysqldb');
 let fileIo = require('../utils/fileio/fileio');
 let randomWord = require('../utils/randomkey/randomKey');
 
-
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-17 16:20:40 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-17 16:20:40 
+ */
 var userRegister = async (ctx, next) => {
     let thisRegisterData = [{}];
     let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');

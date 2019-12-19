@@ -42,14 +42,15 @@ let wsUserecho = wsapp.ws.use((ctx) => {
         //     //     return
         //     // }
         // }
-        setTimeout(() => {
-            let mwssg = JSON.parse(message);
-            // console.log(mwssg.to);
-            if (message != undefined && wsUser[mwssg.to] != undefined) {
-                let msg = { 'msg': mwssg.msg }
-                wsUser[mwssg.to].websocket.send(JSON.stringify(msg));
-            }
-        })
+        // setTimeout(() => {
+        let mwssg = JSON.parse(message);
+        console.log(mwssg);
+        if (message != undefined && wsUser[mwssg.to] != undefined) {
+            let msg = { msg: mwssg.msg };
+            let user = { user: '' }
+            wsUser[mwssg.to].websocket.send(JSON.stringify(msg));
+        }
+        // })
 
 
 

@@ -24,7 +24,7 @@ let pool = mysql.createPool({
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-09 10:35:10 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-13 11:40:51
+ * @Last Modified time: 2019-12-18 16:50:35
  */
 // var query = (sql, arr, callback) => {
 //     //建立链接
@@ -54,10 +54,9 @@ var query = (sql, arr, callback) => {
             if (err) { throw err; return; }
             db.query(sql, arr, (error, results) => {
                 pool.releaseConnection(db);
-
                 if (error) reject('error:' + error);
                 else { resolve(results); }
-            })
+            });
         });
     });
 }
