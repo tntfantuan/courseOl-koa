@@ -1,8 +1,8 @@
 /*
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-17 16:20:40 
- * @Last Modified by:   mikey.zhiyuanL 
- * @Last Modified time: 2019-12-17 16:20:40 
+ * @Last Modified by: mikey.zhiyuanL
+ * @Last Modified time: 2019-12-23 16:10:14
  */
 let db = require('../db/mysqldb');
 let randomWord = require('../utils/randomkey/randomKey');
@@ -128,7 +128,7 @@ var courseRecommend = async (ctx, next) => {
         cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
         cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/coursePs.jpg',
         cType: 'ps',
-        cName: 'PS基础教程',
+        cTitle: 'PS基础教程',
         cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS我是课程介绍，我叫PS',
         cChapter: '第一章',
         cUptime: '2019-10-01',
@@ -146,7 +146,7 @@ var courseRecommend = async (ctx, next) => {
         cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
         cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAe.jpg',
         cType: 'ps',
-        cName: 'Photoshop1 基础课程',
+        cTitle: 'Photoshop1 基础课程',
         cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
         cChapter: '第二章',
         cUptime: '2019-10-01',
@@ -164,7 +164,7 @@ var courseRecommend = async (ctx, next) => {
         cUserheadimg: 'http://192.168.2.128:3000/src/assets/user/LISI/LISI.jpg',
         cHeadimg: 'http://192.168.2.128:3000/src/assets/img/courseHeadImg/courseAi.jpg',
         cType: 'ai',
-        cName: 'Ai基础教程',
+        cTitle: 'Ai基础教程',
         cIntroduce: '我是课程介绍，我叫PS我是课程介绍，我叫PS',
         cChapter: '第三章',
         cUptime: '2019-10-01',

@@ -1,3 +1,9 @@
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-23 10:22:35 
+ * @Last Modified by: mikey.zhiyuanL
+ * @Last Modified time: 2019-12-23 11:15:05
+ */
 let mysql = require('mysql');
 // let pool = mysql.createPool({
 //     host: '117.159.13.249',//主机名
@@ -24,7 +30,7 @@ let pool = mysql.createPool({
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-09 10:35:10 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-18 16:50:35
+ * @Last Modified time: 2019-12-19 18:22:04
  */
 // var query = (sql, arr, callback) => {
 //     //建立链接
@@ -57,6 +63,24 @@ var query = (sql, arr, callback) => {
                 if (error) reject('error:' + error);
                 else { resolve(results); }
             });
+        });
+    });
+}
+
+/*
+ * @Author: mikey.zhiyuanL 
+ * @Date: 2019-12-23 10:22:35 
+ * @Last Modified by:   mikey.zhiyuanL 
+ * @Last Modified time: 2019-12-23 10:22:35 
+ */
+var findDb = (tb_condition, tb_name, tb_whereName, tb_likeName) => {
+    return new Promise((resolve, reject) => {
+        let findSWSql = `SELECT ${tb_condition} FROM ${tb_name} WHERE ${tb_whereName} LIKE ${tb_likeName}`;
+        console.log(findSWSql);
+        query(findSWSql).then(data => {
+            resolve(data)
+        }).catch(err => {
+            reject(err)
         });
     });
 }
@@ -119,7 +143,6 @@ var sWhereDb = (tb_condition, tb_name, tb_whereName) => {
 var sAllwhereDb = (tb_condition, tb_name, tb_whereName) => {
     return new Promise((resolve, reject) => {
         let sWhereSql = `SELECT ${tb_condition} FROM ${tb_name} WHERE ${tb_whereName}`;
-        // console.log(sWhereSql);
         query(sWhereSql).then(data => {
             resolve(data)
         }).catch(err => {
@@ -138,6 +161,7 @@ var upDataDb = (tb_name, tb_setName, tb_whereName, tb_data) => {
     return new Promise((resolve, reject) => {
         let upDataSql = `UPDATE ${tb_name} SET ${tb_setName} = ? WHERE ${tb_whereName} = ?`;
         let upDataParams = [tb_data.tb_setData, tb_data.tb_whereData];
+
         query(upDataSql, upDataParams).then(data => {
             resolve(data);
         }).catch(err => {
@@ -146,6 +170,17 @@ var upDataDb = (tb_name, tb_setName, tb_whereName, tb_data) => {
     });
 }
 
+var XupDataDb = (tb_name, tb_setName, tb_whereName, tb_data) => {
+    return new Promise((resolve, reject) => {
+        let upDataSql = `UPDATE ${tb_name} SET ${tb_setName} WHERE ${tb_whereName}`;
+        let upDataParams = [tb_data.tb_setData[0].uNickname, tb_data.tb_setData[0].uName, tb_data.tb_setData[0].uWx, tb_data.tb_setData[0].uQq, tb_data.tb_setData[0].uEmail, tb_data.tb_setData[0].uSex, tb_data.tb_setData[0].uSchool, tb_data.tb_setData[0].uCompany, tb_data.tb_setData[0].uOccupation, tb_data.tb_setData[0].uOpenkey];
+        query(upDataSql, upDataParams).then(data => {
+            resolve(data);
+        }).catch(err => {
+            reject('error:' + err);
+        })
+    });
+}
 /*
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-10 17:35:56 
@@ -173,9 +208,6 @@ var upDataDb_course = (tb_name, tb_setName1, tb_setName2, tb_whereName, tb_data)
 var deleteDataDb = (tb_name, tb_whereName) => {
     return new Promise((resolve, reject) => {
         let deleteSql = `DELETE FROM ${tb_name} WHERE ${tb_whereName}`;
-        // let deleteParams = ``;
-        // console.log(deleteSql);
-        // console.log(deleteParams);
         query(deleteSql).then(data => {
             resolve(data);
         }).catch(err => {
@@ -211,5 +243,7 @@ module.exports = {
     upDataDb,
     upDataDb_course,
     deleteDataDb,
-    sAllwhereDb
+    sAllwhereDb,
+    XupDataDb,
+    findDb
 };

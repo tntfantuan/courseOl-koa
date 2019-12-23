@@ -1,8 +1,10 @@
+
+// INNER JOIN（内连接,或等值连接）：获取两个表中字段匹配关系的记录
 /*
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-16 09:18:43 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-16 12:32:47
+ * @Last Modified time: 2019-12-19 16:09:33
  */
 let db = require('../db/mysqldb');
 let fileIo = require('../utils/fileio/fileio');
@@ -182,7 +184,7 @@ var myUserbg = async (ctx, next) => {
  * @Last Modified time: 2019-12-08 21:24:44
  */
 var myUserheadimg = async (ctx, next) => {
-    console.log(ctx.request.body)
+    // console.log(ctx.request.body)
     let userNickname = ctx.request.body[0].userNickname;
     let userHeadimgname = ctx.request.body[0].userHeadimgname;
     let fileObj = Buffer.from(ctx.request.body[0].userHeadimg.replace(/^data:image\/\w+;base64,/, ""), 'base64');
@@ -212,7 +214,16 @@ var updataDatabase = (fileType, userNickname, tb_field) => {
 }
 
 var myUserIfmt = async (ctx, next) => {
-    console.log(ctx.request.body);
+
+    let tb_name = 'yh_user';
+    let tb_setName = 'userNickname = ?,userName = ?,userWx = ?,userQq = ?,userEmail = ?,userSex= ?,userSchool = ?,userCompany = ?,userOccupation = ?';
+    let tb_whereName = 'userOpenkey = ?';
+    let tb_data = { tb_setData: ctx.request.body, tb_whereData: ctx.request.body[0].uOpenkey };
+    await db.XupDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+        ctx.response.body = '200';
+    }).catch(err => {
+        console.log(err);
+    });
 }
 
 module.exports = {
