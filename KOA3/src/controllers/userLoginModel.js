@@ -61,7 +61,35 @@ var testData = async (ctx, next) => {
     ctx.response.body = ctx.request.body;
 }
 
+var myIfmtnumer = async (ctx, next) => {
+    let readComment = [];
+    let tb_condition = '*';
+    let tb_name = 'yh_wccComment';
+    let tb_whereUseropenkey = `wccUseropenkey = '${ctx.request.body[0].userOpenkey}'`;
+    await db.sWhereDb(tb_condition, tb_name, tb_whereUseropenkey).then(data => {
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].commentState == '未读') {
+                readComment.push(data[i]);
+            }
+        }
+        let thisCnumber = [{ thisCnumber: parseInt(readComment.length)}];
+        console.log(thisCnumber);
+
+        if (thisCnumber[0].thisCnumber > 0) {
+            console.log(thisCnumber);
+            ctx.response.body = thisCnumber;
+        } else {
+            ctx.response.body = '400';
+        }
+
+    }).catch(err => {
+        console.log(err);
+        ctx.response.body = '400';
+    });
+}
+
 module.exports = {
     'POST /userLogin': userLogin,
-    'POST /test': testData
+    'POST /test': testData,
+    'POST /myIfmtnumer': myIfmtnumer
 }

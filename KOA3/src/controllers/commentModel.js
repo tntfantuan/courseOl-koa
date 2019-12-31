@@ -2,12 +2,11 @@
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-10 17:35:56 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-16 11:31:20
+ * @Last Modified time: 2019-12-30 15:43:34
  */
 var sd = require('silly-datetime');
 var randomWord = require('../utils/randomkey/randomKey');
 let db = require('../db/mysqldb');
-let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
 
 /*
  * @Author: mikey.zhiyuanL 
@@ -96,17 +95,11 @@ let commentCourse = async (ctx, next) => { }
  * @Last Modified time: 2019-12-10 17:35:56 
  */
 let commentWorkCollection = async (ctx, next) => {
+    let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
 
     ctx.request.body[0].commentOpenkey = randomWord.randomWord(false, 43);
     ctx.request.body[0].commentTime = time;
     ctx.request.body[0].commentEquipment = 'Chrome';
-    // console.log(ctx.request.body[0]);
-    // console.log('commentOpenkwy :' + commentOpenkwy);
-    // ctx.websockify.on('message', (message) => {
-    //     // 返回给前端的数据
-    //     ctx.websocket.send(message)
-    // });
-    // console.log(ctx.request.body);
     ctx.response.body = ctx.request.body;
 }
 
@@ -117,21 +110,12 @@ let commentWorkCollection = async (ctx, next) => {
  * @Last Modified time: 2019-12-10 17:35:56 
  */
 let commentWcc = async (ctx, next) => {
+    let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
     ctx.request.body[0].commentOpenkey = randomWord.randomWord(false, 43);
     ctx.request.body[0].commentTime = time;
-    /*  wccOpenkey:'',
-     wccUserNickname:'',
-     commentContent:'',
-     commentClass:'',
-     commentType:'',
-     commentState:'',
-     commentUserheadimg:'',
-     commentUsernickname:'',
-     commentTime:'',
-     commentUseropenkey:'' */
-    // console.log(ctx.request.body);
     let tb_name = `yh_wccComment(id,wccOpenkey,wccUseropenkey,wccUserNickname,commentContent,commentClass,commentType,commentState,commentUserheadimg,commentUsernickname,commentTime,commentOpenkey) VALUES(0,?,?,?,?,?,?,?,?,?,?,?)`;
     let tb_data = [ctx.request.body[0].wccOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].wccUserNickname, ctx.request.body[0].commentContent, ctx.request.body[0].commentClass, ctx.request.body[0].commentType, ctx.request.body[0].commentState, ctx.request.body[0].commentUserheadimg, ctx.request.body[0].commentUsernickname, ctx.request.body[0].commentTime, ctx.request.body[0].commentOpenkey];
+
     await db.insertDatabase(tb_name, tb_data).then((data) => {
         console.log(data);
         ctx.response.body = ctx.request.body;
@@ -140,11 +124,37 @@ let commentWcc = async (ctx, next) => {
     })
 }
 
+let myCstate = async (ctx, next) => {
+    // console.log(ctx.request.body);
+    let tb_name = 'yh_wccComment';
+    let tb_setName = 'commentState';
+    let tb_whereName = 'commentOpenkey';
+    let tb_data = { tb_setData: '已读', tb_whereData: ctx.request.body[0].commentOpenkey };
+
+    await db.upDataDb(tb_name, tb_setName, tb_whereName, tb_data).then(data => {
+        ctx.response.body = '200';
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
+let myCdelete = async (ctx, next) => {
+    let tb_name = 'yh_wccComment';
+    let tb_whereName = `commentOpenkey = '${ctx.request.body[0].commentOpenkey}'`;
+    await db.deleteDataDb(tb_name, tb_whereName).then(data => {
+        ctx.response.body = '200';
+    }).catch(err => { console.log(err); });
+}
+
+
+
 module.exports = {
     'POST /commentWorkCollectionAll': commentWorkCollectionAll,
     'POST /commentCourseAll': commentCourseAll,
     'POST /commentUser': commentUser,
     'POST /commentCourse': commentCourse,
     'POST /commentWorkCollection': commentWorkCollection,
-    'POST /commentWcc': commentWcc
+    'POST /commentWcc': commentWcc,
+    'POST /myCstate': myCstate,
+    'POST /myCdelete': myCdelete
 }

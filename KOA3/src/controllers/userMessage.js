@@ -13,7 +13,6 @@ var conmmentMessage = async (ctx) => {
     let tb_whereUseropenkey = `wccUseropenkey = '${ctx.request.body[0].userOpenkey}'`;
     await db.sWhereDb(tb_condition, tb_name, tb_whereUseropenkey).then(data => {
         let thisAllcomment = data;
-        // console.log(thisAllcomment);
         ctx.response.body = thisAllcomment;
     }).catch(err => {
         console.log(err);

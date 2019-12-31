@@ -2,7 +2,7 @@
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-17 16:20:40 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-23 16:10:14
+ * @Last Modified time: 2019-12-30 14:56:02
  */
 let db = require('../db/mysqldb');
 let randomWord = require('../utils/randomkey/randomKey');
@@ -178,7 +178,15 @@ var courseRecommend = async (ctx, next) => {
         cEWM: '',
         cPath: 'ps/ExcitableBadCarpenterant-mobile.mp4'
     }];
-    ctx.response.body = courseRecommenddata;
+    let tb_name = 'yh_course';
+    await db.selectDatabase(tb_name).then((data) => {
+        for (var i = 0; i < data.length; i++) {
+            delete data[i].workcollectionUserPhone;
+        }
+        ctx.response.body = data;
+    }).catch((err) => {
+        console.log(err);
+    });
 }
 
 /*
