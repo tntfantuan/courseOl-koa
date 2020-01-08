@@ -1,7 +1,6 @@
 let db = require('../db/mysqldb.js');
 var userUpdata = async (ctx, next) => {
-    // console.log(ctx.request.body);
-   
+
     let thisCheckUpdataData = ctx.request.body;
     let cUuserOpenkeyParams = thisCheckUpdataData[0].userOpenkey;
     let checkUpdataPhoneSql = `SELECT * FROM yh_user WHERE userOpenkey ='${cUuserOpenkeyParams}'`;

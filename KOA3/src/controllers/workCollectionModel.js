@@ -7,7 +7,7 @@ let db = require('../db/mysqldb');
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-12 16:35:20 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-17 14:44:58
+ * @Last Modified time: 2020-01-06 14:05:36
  */
 var workCollectionAll = async (ctx, next) => {
     let tb_name = 'yh_workCollection';

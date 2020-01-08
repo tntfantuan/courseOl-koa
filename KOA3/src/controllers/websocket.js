@@ -8,7 +8,7 @@ let wsUsernickname;
 
 
 
-let wsUserecho = wsapp.ws.use((ctx) => {
+var wsUserecho = wsapp.ws.use((ctx) => {
     // console.log('3434343-------------------------------------------------43434343434');
     let userData = JSON.parse(ctx.request.query.userdata);
     // console.log(userData);
@@ -76,7 +76,7 @@ let wsUserecho = wsapp.ws.use((ctx) => {
 });
 
 
-let wsUserout = wsapp.ws.use((ctx) => {
+var wsUserout = wsapp.ws.use((ctx) => {
     ctx.websocket.on("close", (message) => {
         console.log('wsUserout');
 
