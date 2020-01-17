@@ -9,8 +9,8 @@ var systemMessage = async (ctx) => {
 
 var conmmentMessage = async (ctx) => {
     let tb_condition = '*';
-    let tb_name = 'yh_wccComment';
-    let tb_whereUseropenkey = `wccUseropenkey = '${ctx.request.body[0].userOpenkey}'`;
+    let tb_name = 'yh_comment';
+    let tb_whereUseropenkey = `wclcUseropenkey = '${ctx.request.body[0].userOpenkey}'`;
     await db.sWhereDb(tb_condition, tb_name, tb_whereUseropenkey).then(data => {
         let thisAllcomment = data;
         ctx.response.body = thisAllcomment;

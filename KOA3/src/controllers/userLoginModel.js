@@ -64,8 +64,8 @@ var testData = async (ctx, next) => {
 var myIfmtnumer = async (ctx, next) => {
     let readComment = [];
     let tb_condition = '*';
-    let tb_name = 'yh_wccComment';
-    let tb_whereUseropenkey = `wccUseropenkey = '${ctx.request.body[0].userOpenkey}'`;
+    let tb_name = 'yh_comment';
+    let tb_whereUseropenkey = `wclcUseropenkey = '${ctx.request.body[0].userOpenkey}'`;
     await db.sWhereDb(tb_condition, tb_name, tb_whereUseropenkey).then(data => {
         for (var i = 0; i < data.length; i++) {
             if (data[i].commentState == '未读') {

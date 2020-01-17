@@ -2,7 +2,7 @@
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-10 17:35:56 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2020-01-06 14:05:22
+ * @Last Modified time: 2020-01-14 16:04:30
  */
 var sd = require('silly-datetime');
 var randomWord = require('../utils/randomkey/randomKey');
@@ -41,8 +41,8 @@ let commentWorkCollectionAll = async (ctx, next) => {
         commentUseropenkey: 'MNFkbS4IWcKla2nSvRkMCs8rq9mUGpecEVLorKgbrka'
     }];
     let tb_condition = '*';
-    let tb_name = 'yh_wccComment';
-    let tb_whereWlcOpenkey = `wccOpenkey = '${ctx.request.body[0].wlcOpenkey}'`;
+    let tb_name = 'yh_comment';
+    let tb_whereWlcOpenkey = `wclcOpenkey = '${ctx.request.body[0].wclcOpenkey}'`;
     await db.sWhereDb(tb_condition, tb_name, tb_whereWlcOpenkey).then(data => {
         let thisAllcomment = data;
         // console.log(thisAllcomment);
@@ -61,9 +61,10 @@ let commentWorkCollectionAll = async (ctx, next) => {
  */
 let commentCourseAll = async (ctx, next) => {
     let tb_condition = '*';
-    let tb_name = 'yh_wccComment';
-    let tb_whereWlcOpenkey = `wccOpenkey = '${ctx.request.body[0].cOpenkey}'`;
+    let tb_name = 'yh_comment';
+    let tb_whereWlcOpenkey = `wclcOpenkey = '${ctx.request.body[0].cOpenkey}'`;
     await db.sWhereDb(tb_condition, tb_name, tb_whereWlcOpenkey).then(data => {
+        
         let thisAllcomment = data;
         ctx.response.body = thisAllcomment;
     }).catch(err => {
@@ -113,8 +114,8 @@ let commentWcc = async (ctx, next) => {
     let time = sd.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
     ctx.request.body[0].commentOpenkey = randomWord.randomWord(false, 43);
     ctx.request.body[0].commentTime = time;
-    let tb_name = `yh_wccComment(id,wccOpenkey,wccUseropenkey,wccUserNickname,commentContent,commentClass,commentType,commentState,commentUserheadimg,commentUsernickname,commentTime,commentOpenkey) VALUES(0,?,?,?,?,?,?,?,?,?,?,?)`;
-    let tb_data = [ctx.request.body[0].wccOpenkey, ctx.request.body[0].wccUseropenkey, ctx.request.body[0].wccUserNickname, ctx.request.body[0].commentContent, ctx.request.body[0].commentClass, ctx.request.body[0].commentType, ctx.request.body[0].commentState, ctx.request.body[0].commentUserheadimg, ctx.request.body[0].commentUsernickname, ctx.request.body[0].commentTime, ctx.request.body[0].commentOpenkey];
+    let tb_name = `yh_comment(id,wclcOpenkey,wclcUseropenkey,wclcUserNickname,commentContent,commentClass,commentType,commentState,commentUserheadimg,commentUsernickname,commentTime,commentOpenkey) VALUES(0,?,?,?,?,?,?,?,?,?,?,?)`;
+    let tb_data = [ctx.request.body[0].wclcOpenkey, ctx.request.body[0].wclcUseropenkey, ctx.request.body[0].wclcUserNickname, ctx.request.body[0].commentContent, ctx.request.body[0].commentClass, ctx.request.body[0].commentType, ctx.request.body[0].commentState, ctx.request.body[0].commentUserheadimg, ctx.request.body[0].commentUsernickname, ctx.request.body[0].commentTime, ctx.request.body[0].commentOpenkey];
 
     await db.insertDatabase(tb_name, tb_data).then((data) => {
         console.log(data);
@@ -126,7 +127,7 @@ let commentWcc = async (ctx, next) => {
 
 let myCstate = async (ctx, next) => {
     // console.log(ctx.request.body);
-    let tb_name = 'yh_wccComment';
+    let tb_name = 'yh_comment';
     let tb_setName = 'commentState';
     let tb_whereName = 'commentOpenkey';
     let tb_data = { tb_setData: '已读', tb_whereData: ctx.request.body[0].commentOpenkey };
@@ -139,7 +140,7 @@ let myCstate = async (ctx, next) => {
 }
 
 let myCdelete = async (ctx, next) => {
-    let tb_name = 'yh_wccComment';
+    let tb_name = 'yh_comment';
     let tb_whereName = `commentOpenkey = '${ctx.request.body[0].commentOpenkey}'`;
     await db.deleteDataDb(tb_name, tb_whereName).then(data => {
         ctx.response.body = '200';

@@ -17,7 +17,7 @@ var wsUserecho = wsapp.ws.use((ctx) => {
     wsUser[userData.userNickname] = ctx;
     ctx.websocket.on('message', function (message) {
         let mwssg = JSON.parse(message);
-
+        // console.log(mwssg);
         if (message != undefined && wsUser[mwssg.to] != undefined) {
 
 
@@ -39,7 +39,7 @@ var wsUserecho = wsapp.ws.use((ctx) => {
 
                 let msg = { msg: mwssg.msg };
                 wsUser[mwssg.to].websocket.send(JSON.stringify(msg));
-                
+
             }
         }
 
@@ -47,31 +47,6 @@ var wsUserecho = wsapp.ws.use((ctx) => {
             /* 连接关闭时, 清理 上下文数组, 防止报错 */
             delete wsUser[userData.userNickname]
         });
-
-
-        // console.log(mwssg)
-        // for (let i = 0; i < wsUser.length; i++) {
-        //     // if (wsUser[i].header['sec-websocket-key']) { }
-        //     if (ctx == wsUser[i]) continue;
-        //     wsUser[i].websocket.send(`32323242323232423`);
-        //     // console.dir('返回用户KEY：' + ctxs[i].header['sec-websockex`t-key']);
-        // }
-        // let eee = [{'bb':{'bb':'222'},'cc':{'cc':'333'}}];
-        // for (let i = 0; i < eee.length; i++) {
-        // console.log(eee[i].bb);
-        // }
-        // for (let i = 0; i < wsUser.length; i++) {
-        //     console.dir(wsUser[i].zhangsan);
-        //     // if (wsUser[i].userNickname == 'zhangsan') {
-        //     //     // console.dir(wsUser[i].ctxObj);
-        //     //     console.dir(wsUser[i].userNickname);
-        //     //     return
-        //     // }
-        // }
-
-
-
-
     });
 });
 
@@ -79,13 +54,8 @@ var wsUserecho = wsapp.ws.use((ctx) => {
 var wsUserout = wsapp.ws.use((ctx) => {
     ctx.websocket.on("close", (message) => {
         console.log('wsUserout');
-
         console.log(message);
         /* 连接关闭时, 清理 上下文数组, 防止报错 */
-        // delete wsUser[userData.userNickname]
-        // let index = wsUser.indexOf(userData.userNickname);
-        // wsUser.splice(index, 1);
-        // wsUser = {}
     });
 });
 /* WS端口8888监听: */

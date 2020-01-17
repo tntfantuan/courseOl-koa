@@ -4,7 +4,7 @@
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-16 09:18:43 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-30 16:10:22
+ * @Last Modified time: 2020-01-14 16:14:02
  */
 let db = require('../db/mysqldb');
 let fileIo = require('../utils/fileio/fileio');
@@ -16,8 +16,9 @@ let fileIo = require('../utils/fileio/fileio');
  * @Last Modified time: 2019-12-08 21:24:44
  */
 var myWorkcollectionCollect = async (ctx, next) => {
+    // console.log(ctx.request.body[0]);
     let tb_condition = `*`;
-    let tb_name = 'yh_wccCollect';
+    let tb_name = 'yh_wclcCollect';
     let tb_whereName = `wccUseropenkey = '${ctx.request.body[0].wccUseropenkey}'`;
 
     await db.sAllwhereDb(tb_condition, tb_name, tb_whereName).then(data => {
@@ -162,6 +163,7 @@ var testData = async (ctx, next) => {
  * @Last Modified time: 2019-12-08 21:24:44
  */
 var myUserbg = async (ctx, next) => {
+
     let userNicknamelist = ctx.request.body[0].myUsernickname;
     let userBgname = ctx.request.body[0].userBgname;
     let fileObj = Buffer.from(ctx.request.body[0].userMybg.replace(/^data:image\/\w+;base64,/, ""), 'base64');

@@ -5,6 +5,7 @@ let bodyParser = require('koa-bodyparser');
 let koaBody = require('koa-body');
 let kosstatic = require('koa-static');
 let controller = require('./src/controller');
+
 let app = new Koa();
 
 let fs = require('fs');

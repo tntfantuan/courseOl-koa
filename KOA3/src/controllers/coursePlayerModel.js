@@ -2,7 +2,7 @@
  * @Author: mikey.zhiyuanL 
  * @Date: 2019-12-17 16:20:40 
  * @Last Modified by: mikey.zhiyuanL
- * @Last Modified time: 2019-12-18 14:59:55
+ * @Last Modified time: 2020-01-17 11:59:08
  */
 let fs = require('fs');
 
@@ -48,7 +48,7 @@ var coursePlayer = async (ctx, next) => {
     // console.log('ctxUrl :' + ctx.url);
     // console.log(ctx.querystring.split('=')[1]);
 
-    let coursePath = `./src/assets/course/${ctx.params.courseType}/${ctx.params.courseName}.mp4`;
+    let coursePath = `./src/assets/course/${ctx.params.courseType}/${ctx.params.courseName}/${ctx.params.courseName}.mp4`;
     let courseStat = fs.statSync(coursePath);
     let fileSize = courseStat.size;
     let range = ctx.req.headers.range;
