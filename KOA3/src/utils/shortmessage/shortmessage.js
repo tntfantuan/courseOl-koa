@@ -4,8 +4,8 @@ let Core = require('@alicloud/pop-core');
 let shortMessage = (userPhone, randomVarification) => {
     /* 您的验证码为${wx_varification}，该验证码5分钟内有效，请勿泄漏于他人。 */
     var client = new Core({
-        accessKeyId: 'LTAIG9iy0nVsXfOf',
-        accessKeySecret: '8ViL7T1PUuNRWkwcCNgiBLHSdVl9KQ',
+        accessKeyId: '',
+        accessKeySecret: '',
         endpoint: 'https://dysmsapi.aliyuncs.com',
         apiVersion: '2017-05-25'
     });
